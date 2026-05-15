@@ -19,11 +19,11 @@ export const SITE = {
   licenseNumber: '3401043102205',
   licenseAuthority: '合肥市人力资源和社会保障局',
   address: {
-    full: '安徽省合肥市蜀山区潜山路绿地蓝海国际大厦 C 座 910 室',
+    full: '安徽省合肥市蜀山区潜山路绿地蓝海国际大厦 C 座 2413 室',
     region: '安徽省',
     locality: '合肥市',
     district: '蜀山区',
-    street: '潜山路绿地蓝海国际大厦 C 座 910 室',
+    street: '潜山路绿地蓝海国际大厦 C 座 2413 室',
     postalCode: '230031',
   },
   contact: {
