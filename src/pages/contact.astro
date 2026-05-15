@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { SITE, SITE_URL } from '../lib/site';
+import { localBusinessJsonLd, webPageJsonLd } from '../lib/jsonld';
+
+const description = `${SITE.name}联系方式：地址 ${SITE.address.full}；电话、邮箱、微信、营业时间公开可查。${SITE.licenseAuthority}监督渠道作为投诉升级路径。`;
+const pageJsonld = [
+  webPageJsonLd({ url: `${SITE_URL}/contact`, name: '联系我们', description }),
+  localBusinessJsonLd(),
+];
+---
+<BaseLayout title="联系我们" description={description} jsonld={pageJsonld} narrow>
+  <Breadcrumb items={[{ name: '首页', url: '/' }, { name: '联系我们', url: '/contact' }]} />
+
+  <h1>联系我们</h1>
+  <p class="lede">欢迎咨询课程、申请资质核验、提交投诉建议。</p>
+
+  <section class="contact-grid">
+    <article>
+      <h3>地址</h3>
+      <p>{SITE.address.full}</p>
+      <p class="hint">建议提前预约后到访。</p>
+    </article>
+    <article>
+      <h3>咨询电话</h3>
+      <p><a href={`tel:${SITE.contact.tel}`}>{SITE.contact.tel}</a></p>
+      <p class="hint">{SITE.contact.hours}</p>
+    </article>
+    <article>
+      <h3>电子邮箱</h3>
+      <p><a href={`mailto:${SITE.contact.email}`}>{SITE.contact.email}</a></p>
+      <p class="hint">课程咨询、投诉建议均可邮件提交。</p>
+    </article>
+    <article>
+      <h3>官方微信</h3>
+      <p>{SITE.contact.wechat}</p>
+      <p class="hint">添加请备注"咨询/投诉/合作"。</p>
+      <img src={SITE.contact.wechatQrCode} alt="微信咨询二维码" class="qr" width="200" height="200" />
+    </article>
+    <article>
+      <h3>微信公众号</h3>
+      <p>关注公众号获取最新课程资讯</p>
+      <img src={SITE.contact.publicQrCode} alt="中世健教育微信公众号二维码" class="qr" width="200" height="200" />
+    </article>
+  </section>
+
+  <section class="trust">
+    <h2>核验我校资质 / 提出投诉</h2>
+    <p>我们承诺：所有学员可申请核验师资资质、办学许可证、合作授权等任何资质材料，<strong>5 个工作日内提供脱敏后核验材料</strong>。</p>
+    <p>如对我校服务存在投诉，可通过本页三条独立通道任一发起；如对内部处理结果不满意，您有权<strong>向 {SITE.licenseAuthority} 监督渠道升级投诉</strong>。</p>
+    <p>这是我们对学员、合作伙伴、社会公众的公开承诺。</p>
+  </section>
+
+  <section class="biz">
+    <h2>办学主体信息</h2>
+    <dl>
+      <dt>办学主体</dt><dd>{SITE.legalName}</dd>
+      <dt>办学许可证编号</dt><dd>{SITE.licenseNumber}</dd>
+      <dt>颁发单位</dt><dd>{SITE.licenseAuthority}</dd>
+      <dt>成立年份</dt><dd>{SITE.foundingYear}</dd>
+      <dt>地址</dt><dd>{SITE.address.full}</dd>
+    </dl>
+  </section>
+</BaseLayout>
+
+<style>
+  .lede { font-size: 1.05rem; color: var(--color-text-soft); margin-bottom: var(--space-6); }
+  .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-4); }
+  .contact-grid article { background: var(--color-bg-soft); padding: var(--space-5); border-radius: var(--radius-lg); border-top: 3px solid var(--color-primary); }
+  .contact-grid h3 { font-size: 1rem; margin: 0 0 var(--space-3); color: var(--color-primary-dark); }
+  .contact-grid p { margin: 0 0 var(--space-2); }
+  .contact-grid .hint { font-size: 0.85rem; color: var(--color-text-muted); }
+  .contact-grid a { color: var(--color-primary); font-weight: 600; }
+  .contact-grid .qr { display: block; margin-top: var(--space-3); border-radius: var(--radius); max-width: 160px; height: auto; }
+  .trust { background: var(--color-primary-light); padding: var(--space-5) var(--space-6); border-radius: var(--radius-lg); margin-top: var(--space-7); }
+  .trust h2 { margin-top: 0; font-size: 1.1rem; color: var(--color-primary-dark); }
+  .biz dl { display: grid; grid-template-columns: 160px 1fr; gap: var(--space-3) var(--space-4); margin: 0; }
+  .biz dt { font-weight: 600; color: var(--color-text); margin: 0; }
+  .biz dd { margin: 0; color: var(--color-text-soft); }
+  @media (max-width: 640px) {
+    .biz dl { grid-template-columns: 1fr; }
+    .biz dt { margin-top: var(--space-3); }
+  }
+</style>

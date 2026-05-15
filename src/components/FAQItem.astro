@@ -1,0 +1,29 @@
+---
+interface Props {
+  question: string;
+  open?: boolean;
+}
+const { question, open = false } = Astro.props;
+---
+<details class="faq-item" open={open}>
+  <summary>
+    <span class="q">{question}</span>
+    <span class="icon" aria-hidden="true"></span>
+  </summary>
+  <div class="answer">
+    <slot />
+  </div>
+</details>
+<style>
+  .faq-item { background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius); margin-bottom: var(--space-3); overflow: hidden; }
+  .faq-item summary { padding: var(--space-4) var(--space-5); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); list-style: none; font-weight: 600; color: var(--color-text); transition: background .15s; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary:hover { background: var(--color-bg-soft); }
+  .faq-item .q { flex: 1; }
+  .faq-item .icon { width: 14px; height: 14px; border-right: 2px solid var(--color-text-muted); border-bottom: 2px solid var(--color-text-muted); transform: rotate(45deg); transition: transform .2s; flex-shrink: 0; margin-bottom: 4px; }
+  .faq-item[open] .icon { transform: rotate(-135deg); margin-bottom: -4px; }
+  .faq-item .answer { padding: 0 var(--space-5) var(--space-5); color: var(--color-text-soft); border-top: 1px solid var(--color-border); padding-top: var(--space-4); }
+  .faq-item .answer :global(p) { margin: 0 0 var(--space-3); }
+  .faq-item .answer :global(p:last-child) { margin-bottom: 0; }
+  .faq-item .answer :global(a) { color: var(--color-primary); }
+</style>

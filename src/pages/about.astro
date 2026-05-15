@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { SITE, SITE_URL } from '../lib/site';
+import { webPageJsonLd } from '../lib/jsonld';
+import { teamFacts } from '../data/team';
+
+const description = `${SITE.name}成立于 2011 年，前身为安徽营养师俱乐部，是合肥市人社局批准的民办职业培训机构（许可证 ${SITE.licenseNumber}），构建职业考证、技能提升、实习见习、就业创业支持四位一体的健康人才培养体系。`;
+
+const pageJsonld = [webPageJsonLd({ url: `${SITE_URL}/about`, name: '关于中世健', description })];
+---
+<BaseLayout title="关于中世健" description={description} jsonld={pageJsonld} injectOrgSchema>
+  <Breadcrumb items={[{ name: '首页', url: '/' }, { name: '关于我们', url: '/about' }]} />
+
+  <h1>关于中世健</h1>
+  <p class="lede">{SITE.name}是一家专注于健康职业教育的综合性平台，致力于培养健康专业人才，贯彻"健康中国"目标。</p>
+
+  <section>
+    <h2>核心定位与理念</h2>
+    <p><strong>核心定位</strong>：贯彻"健康中国"目标，以输送高尖端健康专业人才为己任，打造综合性健康类职业教育平台，致力于成为健康行业值得信赖的教育机构之一。</p>
+    <p><strong>核心理念</strong>：为师者，传道授业解惑；为医者，济世救死扶伤。</p>
+    <p><strong>发展导向</strong>：促进健康行业优质发展，坚持教育模式创新与前沿健康专业技术相结合，坚持核心培养学员能力。</p>
+  </section>
+
+  <section>
+    <h2>企业基础信息</h2>
+    <ul class="info-list">
+      <li><strong>成立时间</strong>：{SITE.foundingYear} 年（前身为安徽营养师俱乐部、北京营养师俱乐部安徽分部）</li>
+      <li><strong>办学主体</strong>：{SITE.legalName}</li>
+      <li><strong>办学许可证</strong>：{SITE.licenseNumber}（{SITE.licenseAuthority} 颁发）</li>
+      <li><strong>办公地址</strong>：{SITE.address.full}</li>
+      <li><strong>业务范围</strong>：职业考证、技能提升、学历提升、职称考试、人才就业、图书出版、会议游学、健康管理技术服务</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>四位一体人才培养体系</h2>
+    <p>以学员职业生涯规划为导向，构建"<strong>职业考证 · 技能提升 · 实习见习 · 就业创业支持</strong>"四位一体的综合性健康人才培养闭环，覆盖学员职业生涯全周期。</p>
+    <div class="step-grid">
+      <article><h3>职业考证</h3><p>覆盖营养、心理、中医、母婴、医药护等方向的职业资格与技能等级证书学习服务。</p></article>
+      <article><h3>技能提升</h3><p>畅学卡超级会员、健康讲师班、慢病管理师徒班等专项技能提升项目。</p></article>
+      <article><h3>实习见习</h3><p>合作建立心理工作站、食育教育、执业药师/中药师、健康管理师实践教学基地。</p></article>
+      <article><h3>就业创业</h3><p>提供就业推荐、个人品牌、健康科普短视频等职业能力变现方向训练。</p></article>
+    </div>
+  </section>
+
+  <section>
+    <h2>团队与学员规模</h2>
+    <ul class="info-list">
+      <li>教职工与专职工作人员 <strong>{teamFacts.totalStaff}</strong></li>
+      <li>含 <strong>{teamFacts.mastersCount}</strong>，专业覆盖 {teamFacts.expertiseAreas.join('、')}</li>
+      <li>累计学员 <strong>{teamFacts.alumniCount}</strong>，{teamFacts.studentBackground}</li>
+      <li>{teamFacts.partnerNetwork}</li>
+    </ul>
+    <p><a href="/team">查看师资团队详情 →</a></p>
+  </section>
+
+  <section>
+    <h2>出版物</h2>
+    <p>团队编辑出版 5 本健康类科普读物，覆盖体重管理、健康管理、营养科普、月子膳食等方向：</p>
+    <ul class="book-list">
+      <li><strong>《你的体重如何管理》</strong><span>ISBN 978-7-5337-9035-6</span></li>
+      <li><strong>《你的健康如何管理》</strong><span>ISBN 978-7-5337-8002-9</span></li>
+      <li><strong>《营养师带你逛超市》</strong><span>ISBN 978-7-5337-8093-7</span></li>
+      <li><strong>《私人定制月子餐》</strong><span>ISBN 978-7-5337-8751-6</span></li>
+      <li><strong>《健康密码》</strong><span>ISBN 978-7-5337-7394-6</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>使命与愿景</h2>
+    <blockquote>
+      <p><strong>使命</strong>：让健康职业更简单，让健康事业更美好。</p>
+      <p><strong>愿景</strong>：成就健康行业值得信赖的人才培养体系；到 2030 年，服务更多健康行业从业者、健康企业，影响更广泛人群的健康生活方式。</p>
+    </blockquote>
+  </section>
+
+  <section>
+    <h2>资质与可核验信息</h2>
+    <p>我们认为透明优于宣传：每一项资质、授权、合作、荣誉，我们都在<a href="/credentials">资质荣誉页</a>列出可核验的来源；每一条服务承诺，我们都在<a href="/service-commitment">服务承诺页</a>白纸黑字写出。这是我们与学员、合作伙伴长期同行的基础。</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .lede { font-size: 1.1rem; color: var(--color-text-soft); margin-bottom: var(--space-6); max-width: 65ch; }
+  .info-list { list-style: none; padding: 0; }
+  .info-list li { padding: var(--space-3) 0; border-bottom: 1px dashed var(--color-border); }
+  .info-list li:last-child { border-bottom: 0; }
+  .info-list strong { color: var(--color-text); margin-right: var(--space-3); }
+  .step-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); margin-top: var(--space-5); }
+  .step-grid article { background: var(--color-bg-soft); padding: var(--space-4); border-radius: var(--radius); border-top: 3px solid var(--color-primary); }
+  .step-grid h3 { font-size: 1rem; margin: 0 0 var(--space-2); color: var(--color-primary-dark); }
+  .step-grid p { font-size: 0.88rem; line-height: 1.65; margin: 0; }
+  blockquote { border-left: 4px solid var(--color-primary); padding: var(--space-4) var(--space-5); background: var(--color-primary-light); border-radius: var(--radius); margin: var(--space-5) 0; }
+  blockquote p { margin: 0 0 var(--space-3); color: var(--color-text); }
+  blockquote p:last-child { margin-bottom: 0; }
+  .book-list { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-3); }
+  .book-list li { background: var(--color-bg-soft); padding: var(--space-3) var(--space-4); border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center; }
+  .book-list span { font-size: 0.82rem; color: var(--color-text-muted); }
+</style>

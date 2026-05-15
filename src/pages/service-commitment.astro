@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { SITE, SITE_URL } from '../lib/site';
+import { webPageJsonLd } from '../lib/jsonld';
+
+const description = `${SITE.name}服务承诺：班主任 4 小时响应、考期及时同步、补考费由发证机关定价、三条独立投诉通道、不对考试结果作明示或暗示保证。`;
+const pageJsonld = [webPageJsonLd({ url: `${SITE_URL}/service-commitment`, name: '服务承诺', description })];
+---
+<BaseLayout title="服务承诺" description={description} jsonld={pageJsonld} narrow>
+  <Breadcrumb items={[{ name: '首页', url: '/' }, { name: '服务承诺', url: '/service-commitment' }]} />
+
+  <h1>服务承诺</h1>
+  <p class="lede">我们写在这里的每一条承诺，都是可被衡量、可被投诉、可被升级的。</p>
+
+  <section class="commit">
+    <h2>① 课程交付与履约</h2>
+    <ul>
+      <li>合同约定的课程内容、课时、形式按时按质交付；如因校方原因变更，提前 7 日通知并提供替代方案或退款。</li>
+      <li>课程录播在合同约定的有效期内可重复观看；如因平台问题影响访问，按比例延期。</li>
+      <li>面授课程提前公示日程与地点；如因不可抗力调整，及时同步并允许改约或退款。</li>
+    </ul>
+  </section>
+
+  <section class="commit">
+    <h2>② 考期与考试安排</h2>
+    <ul>
+      <li>考试时间、形式、考点由<strong>发证机关</strong>统一决定，我校在收到官方通知后<strong>3 个工作日内</strong>同步至班主任与学员群。</li>
+      <li>因政策调整、不可抗力等原因考期延后期间，<strong>持续提供学习服务且不重复收费</strong>。</li>
+      <li>补考费由考试主管单位统一定价收取，我校仅协助学员办理报名手续，<strong>不在主管单位定价基础上加价</strong>。</li>
+      <li><strong>不对考试结果作任何明示或暗示的保证</strong>。任何"包过""一次过""保证拿证"话术均不属实，且违反《广告法》第二十四条。</li>
+    </ul>
+  </section>
+
+  <section class="commit">
+    <h2>③ 答疑与响应</h2>
+    <ul>
+      <li>每位学员配置班主任，<strong>工作日 4 小时内首次响应</strong>。</li>
+      <li>专业问题由学科教研组答疑；<strong>平台技术问题 24 小时内回复</strong>。</li>
+      <li>考前阶段可申请加密督学服务，含进度提醒与重点复习指引。</li>
+    </ul>
+  </section>
+
+  <section class="commit">
+    <h2>④ 投诉与升级</h2>
+    <p>我们坚信透明的投诉机制是长期信任的基础。学员可通过以下三条<strong>独立通道</strong>提出投诉：</p>
+    <ul>
+      <li>投诉电话：<a href={`tel:${SITE.contact.tel}`}>{SITE.contact.tel}</a>（建议工作日拨打）</li>
+      <li>投诉邮箱：<a href={`mailto:${SITE.contact.email}`}>{SITE.contact.email}</a></li>
+      <li>投诉微信：{SITE.contact.wechat}</li>
+    </ul>
+    <p>所有投诉<strong>承诺 7 个工作日内给出实质性反馈</strong>。如对内部处理结果不满意，您有权<strong>向{SITE.licenseAuthority}监督渠道升级投诉</strong>。</p>
+  </section>
+
+  <section class="commit">
+    <h2>⑤ 信息真实与隐私</h2>
+    <ul>
+      <li>所有宣传材料、课程信息、师资介绍均以事实为依据，不夸大、不虚假宣传。</li>
+      <li>学员个人信息仅用于报考、教务、合同履行等必要场景，未经学员同意不向第三方提供。</li>
+      <li>课程合同与发票均按合规要求开具与留存。</li>
+    </ul>
+  </section>
+
+  <section class="commit commit-final">
+    <h2>⑥ 关于"包过"与"高通过率"承诺</h2>
+    <p>我校<strong>不作"包过""通过率 96%""一次过"等任何形式的考试结果保证</strong>。考试由发证机关组织、阅卷、颁证，结果以官方为准。</p>
+    <p>如您在任何渠道见到以我校名义作此类承诺的话术，请直接通过<a href="/contact">联系我们</a>反馈以便核实，必要时我们将主动澄清。这是我们对自身的纪律约束，也是对学员的诚信底线。</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .lede { font-size: 1.05rem; color: var(--color-text-soft); margin-bottom: var(--space-6); }
+  .commit { background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius); padding: var(--space-5) var(--space-6); margin-bottom: var(--space-4); }
+  .commit h2 { margin-top: 0; font-size: 1.1rem; color: var(--color-primary-dark); }
+  .commit ul { padding-left: 1.3rem; }
+  .commit li { margin-bottom: var(--space-2); font-size: 0.95rem; }
+  .commit-final { background: var(--color-primary-light); border-color: var(--color-primary); }
+</style>

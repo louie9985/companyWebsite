@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { SITE, SITE_URL } from '../lib/site';
+import { personJsonLd, webPageJsonLd } from '../lib/jsonld';
+import { founder, teamFacts, teamMembers } from '../data/team';
+
+const description = `${SITE.name}师资团队：${teamFacts.totalStaff}教职工，含${teamFacts.mastersCount}，专业涵盖${teamFacts.expertiseAreas.slice(0, 4).join('、')}等。创始人${founder.name}毕业于${founder.alumni}。`;
+
+const pageJsonld = [
+  webPageJsonLd({ url: `${SITE_URL}/team`, name: '师资团队', description }),
+  personJsonLd(),
+];
+---
+<BaseLayout title="师资团队" description={description} jsonld={pageJsonld}>
+  <Breadcrumb items={[{ name: '首页', url: '/' }, { name: '师资团队', url: '/team' }]} />
+
+  <h1>师资团队</h1>
+  <p class="lede">我们的师资由专业出身、长期实操、持续学习的教育从业者组成。学员或合作方可申请师资资质核验。</p>
+
+  <section class="facts">
+    <article><strong>{teamFacts.totalStaff}</strong><span>专职教职工</span></article>
+    <article><strong>{teamFacts.mastersCount}</strong><span>硕士背景</span></article>
+    <article><strong>{teamFacts.alumniCount}</strong><span>累计学员</span></article>
+    <article><strong>{teamFacts.partnerNetwork}</strong><span>合作伙伴</span></article>
+  </section>
+
+  <section id="chengwei">
+    <h2>创始人 · {founder.name}</h2>
+    <div class="founder-card">
+      <div>
+        <p class="role">{founder.jobTitle} · 毕业于{founder.alumni}</p>
+        {founder.bio.map((line) => <p>{line}</p>)}
+        <p><strong>社会任职</strong>：{founder.affiliations.join('、')}</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>专业方向团队</h2>
+    <p>师资按以下专业方向分组，承担相应课程的教学、答疑与督导。专业涵盖 {teamFacts.expertiseAreas.join('、')}。</p>
+    <div class="member-grid">
+      {teamMembers.map((m) => (
+        <article>
+          <h3>{m.field}</h3>
+          <p>{m.description}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="verify">
+    <h2>师资资质核验</h2>
+    <p>我们认为：师资资质应当可被核验。学员或合作方可联系班主任或<a href="/contact">联系我们</a>申请核验师资学历与执业资质，我校承诺在 5 个工作日内提供脱敏后的资质核验材料。</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .lede { font-size: 1.05rem; color: var(--color-text-soft); margin-bottom: var(--space-6); max-width: 65ch; }
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-7); }
+  .facts article { background: var(--color-bg-soft); border-radius: var(--radius-lg); padding: var(--space-4); text-align: center; }
+  .facts strong { display: block; font-size: 1.4rem; color: var(--color-primary); font-weight: 700; }
+  .facts span { font-size: 0.85rem; color: var(--color-text-muted); }
+  .founder-card { background: var(--color-primary-light); padding: var(--space-5) var(--space-6); border-radius: var(--radius-lg); margin-top: var(--space-4); }
+  .founder-card .role { color: var(--color-primary-dark); font-weight: 600; margin-bottom: var(--space-3); }
+  .founder-card p { color: var(--color-text); }
+  .member-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-4); margin-top: var(--space-4); }
+  .member-grid article { background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius); padding: var(--space-4); }
+  .member-grid h3 { font-size: 1rem; color: var(--color-primary-dark); margin: 0 0 var(--space-2); }
+  .member-grid p { font-size: 0.9rem; margin: 0; color: var(--color-text-soft); }
+  .verify { background: var(--color-bg-soft); padding: var(--space-5) var(--space-6); border-radius: var(--radius-lg); border-left: 4px solid var(--color-success); margin-top: var(--space-7); }
+  .verify h2 { margin-top: 0; font-size: 1.1rem; }
+</style>

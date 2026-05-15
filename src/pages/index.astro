@@ -1,0 +1,131 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CourseCard from '../components/CourseCard.astro';
+import FAQItem from '../components/FAQItem.astro';
+import { SITE, SITE_URL } from '../lib/site';
+import { faqJsonLd, webPageJsonLd } from '../lib/jsonld';
+import { courses, featuredCourseSlugs } from '../data/courses';
+import { faqs, homeFeaturedFaqIndices } from '../data/faqs';
+
+const featuredCourses = featuredCourseSlugs
+  .map((slug) => courses.find((c) => c.slug === slug))
+  .filter((c): c is NonNullable<typeof c> => Boolean(c));
+const homeFaqs = homeFeaturedFaqIndices.map((i) => faqs[i]).filter(Boolean);
+
+const description = `${SITE.name}：2011 年成立，合肥市人社局批准（办学许可证 ${SITE.licenseNumber}）的健康类职业教育平台，提供健康管理师、公共营养师、心理咨询师等职业证书培训，承诺缴费 7 日内无理由退款。`;
+
+const pageJsonld = [
+  webPageJsonLd({ url: `${SITE_URL}/`, name: SITE.name, description }),
+  faqJsonLd(homeFaqs.map((f) => ({ q: f.q, a: f.a }))),
+];
+---
+<BaseLayout title={SITE.name} description={description} jsonld={pageJsonld} injectOrgSchema>
+  <section class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">健康职业教育平台 · 安徽合肥</p>
+      <h1>{SITE.name}</h1>
+      <p class="lede">
+        2011 年成立，合肥市人社局批准的民办职业培训机构（办学许可证编号 <strong>{SITE.licenseNumber}</strong>）。我们提供注册营养师、健康管理师、公共营养师、心理咨询师、执业药师、妇幼保健员等职业考证、技能提升与就业服务，并以透明的退费政策与服务承诺与学员同行。
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="/courses">查看课程项目</a>
+        <a class="btn btn-ghost" href="/refund-policy">了解退费政策</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><strong>2011</strong><span>创校年份</span></div>
+      <div class="stat"><strong>5.0 万+</strong><span>累计学员</span></div>
+      <div class="stat"><strong>50+</strong><span>专职教职工</span></div>
+      <div class="stat"><strong>100+</strong><span>合作伙伴</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>合规办学，资质可核验</h2>
+    <p>我们认为：可被验证的资质胜过任何宣传话术。每一项授权与荣誉，我们都在<a href="/credentials">资质荣誉页</a>列出核验路径。</p>
+    <ul class="cred-grid">
+      <li><strong>办学许可证</strong><span>{SITE.licenseAuthority}颁发，编号 {SITE.licenseNumber}</span></li>
+      <li><strong>卫健委授权</strong><span>健康管理师、社区康复理疗 安徽省授权培训点</span></li>
+      <li><strong>中科院心理所授权</strong><span>《心理基础理论培训考核》安徽省授权点</span></li>
+      <li><strong>院校合作</strong><span>安徽中医药大学职业技能等级考试合作点</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>精选课程</h2>
+    <p>覆盖营养健康、心理健康、中医母婴、医药护类四大方向，全部课程已公开学习方式与服务承诺。</p>
+    <div class="course-grid">
+      {featuredCourses.map((c) => (
+        <CourseCard
+          slug={c.slug}
+          name={c.name}
+          category={c.category}
+          description={c.description}
+          duration={c.duration}
+          priceText={c.priceText}
+        />
+      ))}
+    </div>
+    <p class="more-link"><a href="/courses">查看全部课程 →</a></p>
+  </section>
+
+  <section class="promise">
+    <h2>三个透明承诺</h2>
+    <div class="promise-grid">
+      <article>
+        <h3>缴费 7 日无理由退款</h3>
+        <p>自缴费日起 7 个自然日内，按合同约定可申请无理由退款。具体规则、办理时限、投诉升级通道在<a href="/refund-policy">退费政策页</a>白纸黑字公开。</p>
+      </article>
+      <article>
+        <h3>不对考试结果作保证</h3>
+        <p>考试由发证机关统一组织、统一阅卷。我们提供学习服务，但不承诺通过率，也拒绝"包过"话术。详见<a href="/service-commitment">服务承诺</a>。</p>
+      </article>
+      <article>
+        <h3>三条独立投诉通道</h3>
+        <p>电话、邮箱、微信三条独立投诉通道；如对内部处理不满意，可升级至合肥市人社局监督渠道。</p>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <h2>常见问题</h2>
+    <div class="faq-list">
+      {homeFaqs.map((f) => (
+        <FAQItem question={f.q}>
+          <p>{f.a}</p>
+        </FAQItem>
+      ))}
+    </div>
+    <p class="more-link"><a href="/faq">查看全部问答 →</a></p>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero { display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-7); align-items: center; padding: var(--space-7) 0 var(--space-6); border-bottom: 1px solid var(--color-border); }
+  .hero h1 { font-size: clamp(2rem, 4vw, 2.75rem); margin: 0 0 var(--space-4); }
+  .eyebrow { color: var(--color-primary); font-weight: 600; font-size: 0.9rem; margin: 0 0 var(--space-3); letter-spacing: 0.04em; }
+  .lede { font-size: 1.05rem; line-height: 1.8; max-width: 60ch; }
+  .hero-cta { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-5); }
+  .btn { display: inline-block; padding: 12px 24px; border-radius: var(--radius); font-weight: 600; text-decoration: none; transition: transform .12s, background .12s; font-size: 0.95rem; }
+  .btn-primary { background: var(--color-primary); color: #fff; }
+  .btn-primary:hover { background: var(--color-primary-dark); color: #fff; text-decoration: none; }
+  .btn-ghost { background: transparent; color: var(--color-primary); border: 1px solid var(--color-primary); }
+  .btn-ghost:hover { background: var(--color-primary-light); text-decoration: none; }
+  .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+  .stat { background: var(--color-bg-soft); border-radius: var(--radius-lg); padding: var(--space-4); text-align: center; }
+  .stat strong { display: block; font-size: 1.5rem; color: var(--color-primary); font-weight: 700; }
+  .stat span { font-size: 0.85rem; color: var(--color-text-muted); }
+  .cred-grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-4); }
+  .cred-grid li { background: var(--color-bg-soft); padding: var(--space-4); border-radius: var(--radius); border-left: 3px solid var(--color-primary); margin: 0; }
+  .cred-grid strong { display: block; color: var(--color-text); margin-bottom: 4px; }
+  .cred-grid span { font-size: 0.88rem; color: var(--color-text-muted); }
+  .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-4); margin-top: var(--space-5); }
+  .more-link { text-align: right; margin-top: var(--space-4); }
+  .more-link a { color: var(--color-primary); font-weight: 600; }
+  .promise-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-4); margin-top: var(--space-5); }
+  .promise article { background: var(--color-primary-light); border-radius: var(--radius-lg); padding: var(--space-5); }
+  .promise h3 { font-size: 1.05rem; margin: 0 0 var(--space-3); color: var(--color-primary-dark); }
+  .promise p { font-size: 0.92rem; color: var(--color-text-soft); margin: 0; line-height: 1.7; }
+  .faq-list { margin-top: var(--space-5); }
+  @media (max-width: 768px) { .hero { grid-template-columns: 1fr; } }
+</style>

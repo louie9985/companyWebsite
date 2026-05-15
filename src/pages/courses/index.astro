@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CourseCard from '../../components/CourseCard.astro';
+import { SITE, SITE_URL } from '../../lib/site';
+import { courseListJsonLd, webPageJsonLd } from '../../lib/jsonld';
+import { courses, courseCategories } from '../../data/courses';
+
+const description = `${SITE.name}课程项目：覆盖注册营养师、健康管理师、公共营养师、心理咨询师、执业药师、妇幼保健员、社区康复理疗、育婴师等健康类职业证书与技能培训，按营养健康、心理健康、中医母婴、医药护类四大方向分类。`;
+
+const grouped = courseCategories.map((cat) => ({
+  ...cat,
+  items: courses.filter((c) => c.category === cat.key),
+}));
+
+const pageJsonld = [
+  webPageJsonLd({ url: `${SITE_URL}/courses`, name: '课程项目', description }),
+  courseListJsonLd(courses.map((c) => ({ slug: c.slug, name: c.name }))),
+];
+---
+<BaseLayout title="课程项目" description={description} jsonld={pageJsonld}>
+  <Breadcrumb items={[{ name: '首页', url: '/' }, { name: '课程项目', url: '/courses' }]} />
+  <h1>课程项目</h1>
+  <p class="lede">
+    我们将课程按 <strong>营养健康、心理健康、中医母婴、医药护类</strong> 四大方向分类。所有课程均明示授权来源、学习方式与服务承诺；考试结果由发证机关认定，我们不对通过率作任何保证。
+  </p>
+
+  {grouped.map((cat) => (
+    <section>
+      <h2>{cat.key}</h2>
+      <p>{cat.desc}</p>
+      <div class="course-grid">
+        {cat.items.map((c) => (
+          <CourseCard
+            slug={c.slug}
+            name={c.name}
+            category={c.category}
+            description={c.description}
+            duration={c.duration}
+            priceText={c.priceText}
+          />
+        ))}
+      </div>
+    </section>
+  ))}
+
+  <section class="legal-note">
+    <h2>关于课程价格与学费</h2>
+    <p>我们采用 <strong>混合定价策略</strong>：入门级班型（如标准班）会在课程详情页公开价格区间；高阶班型（如 VIP 班、师徒班）因人定制，建议先与课程顾问沟通需求后再议定方案。<strong>所有报价、合同条款、退费规则均以与学员签署的书面合同为准</strong>，签约前一律不收取任何隐性费用。</p>
+    <p>如果您看到任何"包过""一次过""保证拿证"等承诺话术，请直接<a href="/contact">联系我们</a>核验真伪。我们严格遵守《广告法》第二十四条，不会作此类承诺。</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .lede { font-size: 1.05rem; max-width: 65ch; margin-bottom: var(--space-6); color: var(--color-text-soft); }
+  .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-4); margin-top: var(--space-4); }
+  .legal-note { background: var(--color-bg-soft); padding: var(--space-5) var(--space-6); border-radius: var(--radius-lg); margin-top: var(--space-7); }
+  .legal-note h2 { margin-top: 0; font-size: 1.1rem; }
+  .legal-note p { font-size: 0.92rem; }
+</style>

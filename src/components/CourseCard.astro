@@ -1,0 +1,35 @@
+---
+interface Props {
+  slug: string;
+  name: string;
+  category: string;
+  description: string;
+  duration?: string;
+  priceText?: string;
+}
+const { slug, name, category, description, duration, priceText } = Astro.props;
+---
+<article class="course-card">
+  <div class="card-tag">{category}</div>
+  <h3><a href={`/courses/${slug}`}>{name}</a></h3>
+  <p class="desc">{description}</p>
+  <dl class="meta">
+    {duration && (<><dt>课时</dt><dd>{duration}</dd></>)}
+    {priceText && (<><dt>学费</dt><dd>{priceText}</dd></>)}
+  </dl>
+  <a class="more" href={`/courses/${slug}`}>查看课程详情 →</a>
+</article>
+<style>
+  .course-card { background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-5); transition: border-color .15s, box-shadow .15s, transform .15s; height: 100%; display: flex; flex-direction: column; }
+  .course-card:hover { border-color: var(--color-primary); box-shadow: var(--shadow); transform: translateY(-2px); }
+  .card-tag { display: inline-block; background: var(--color-primary-light); color: var(--color-primary); font-size: 0.78rem; font-weight: 600; padding: 4px 10px; border-radius: 999px; margin-bottom: var(--space-3); align-self: flex-start; }
+  .course-card h3 { font-size: 1.1rem; margin: 0 0 var(--space-3); }
+  .course-card h3 a { color: var(--color-text); text-decoration: none; }
+  .course-card h3 a:hover { color: var(--color-primary); }
+  .desc { font-size: 0.9rem; color: var(--color-text-soft); margin: 0 0 var(--space-4); flex: 1; line-height: 1.65; }
+  .meta { display: grid; grid-template-columns: auto 1fr; gap: 4px var(--space-3); margin: 0 0 var(--space-4); font-size: 0.85rem; }
+  .meta dt { color: var(--color-text-muted); margin: 0; }
+  .meta dd { color: var(--color-text); margin: 0; font-weight: 500; }
+  .more { font-size: 0.9rem; color: var(--color-primary); font-weight: 600; text-decoration: none; }
+  .more:hover { text-decoration: underline; }
+</style>

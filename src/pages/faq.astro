@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import FAQItem from '../components/FAQItem.astro';
+import { SITE, SITE_URL } from '../lib/site';
+import { faqJsonLd, webPageJsonLd } from '../lib/jsonld';
+import { faqs, type FAQ } from '../data/faqs';
+
+const description = `${SITE.name}常见问题解答：13 条覆盖资质合规、退费政策、考试与成绩、服务承诺、价格与发票、学习方式六大维度。所有答复严格遵守《广告法》合规要求。`;
+
+const categories = ['资质合规', '退费政策', '考试与成绩', '服务承诺', '价格与发票', '学习方式'] as const;
+const grouped: Record<string, FAQ[]> = Object.fromEntries(
+  categories.map((cat) => [cat, faqs.filter((f) => f.category === cat)]),
+);
+
+const pageJsonld = [
+  webPageJsonLd({ url: `${SITE_URL}/faq`, name: '常见问题', description }),
+  faqJsonLd(faqs.map((f) => ({ q: f.q, a: f.a }))),
+];
+---
+<BaseLayout title="常见问题" description={description} jsonld={pageJsonld}>
+  <Breadcrumb items={[{ name: '首页', url: '/' }, { name: '常见问题', url: '/faq' }]} />
+
+  <h1>常见问题</h1>
+  <p class="lede">我们把学员问得最多的 13 个问题集中在这里，包含资质、退费、考试、服务、价格、学习方式六个维度。</p>
+
+  {categories.map((cat) => grouped[cat].length > 0 && (
+    <section>
+      <h2>{cat}</h2>
+      <div class="faq-list">
+        {grouped[cat].map((f) => (
+          <FAQItem question={f.q}>
+            <p>{f.a}</p>
+          </FAQItem>
+        ))}
+      </div>
+    </section>
+  ))}
+
+  <section class="more">
+    <h2>问题没找到答案？</h2>
+    <p>欢迎通过<a href="/contact">联系我们</a>留言，或拨打学校电话。我们会把高频追问整理进本页，供后续学员参考。</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .lede { font-size: 1.05rem; color: var(--color-text-soft); margin-bottom: var(--space-6); }
+  .faq-list { margin-top: var(--space-4); }
+  .more { background: var(--color-bg-soft); padding: var(--space-5) var(--space-6); border-radius: var(--radius-lg); margin-top: var(--space-7); border-left: 4px solid var(--color-primary); }
+  .more h2 { margin-top: 0; font-size: 1.1rem; }
+</style>

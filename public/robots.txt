@@ -1,0 +1,57 @@
+# 合肥中世健教育 robots.txt
+User-agent: *
+Allow: /
+Disallow: /404
+Crawl-delay: 1
+
+# 国内主流搜索引擎与 AI 爬虫显式放行
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Sogou web spider
+Allow: /
+
+User-agent: 360Spider
+Allow: /
+
+User-agent: YisouSpider
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: PetalBot
+Allow: /
+
+User-agent: Yahoo! Slurp China
+Allow: /
+
+# 海外 AI 爬虫与搜索引擎
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://www.example.com/sitemap-index.xml

@@ -1,0 +1,33 @@
+---
+import { breadcrumbJsonLd } from '../lib/jsonld';
+
+interface Props {
+  items: Array<{ name: string; url: string }>;
+}
+const { items } = Astro.props;
+const schema = breadcrumbJsonLd(items);
+---
+<nav class="breadcrumb" aria-label="面包屑">
+  <ol>
+    {items.map((it, i) => (
+      <li>
+        {i < items.length - 1 ? (
+          <a href={it.url}>{it.name}</a>
+        ) : (
+          <span aria-current="page">{it.name}</span>
+        )}
+        {i < items.length - 1 && <span class="sep" aria-hidden="true">/</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+<script type="application/ld+json" set:html={JSON.stringify(schema)} is:inline />
+<style>
+  .breadcrumb { font-size: 0.875rem; color: var(--color-text-muted); margin: var(--space-4) 0 var(--space-5); }
+  .breadcrumb ol { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .breadcrumb li { margin: 0; display: flex; align-items: center; gap: var(--space-2); }
+  .breadcrumb a { color: var(--color-text-muted); }
+  .breadcrumb a:hover { color: var(--color-primary); }
+  .breadcrumb [aria-current="page"] { color: var(--color-text); font-weight: 500; }
+  .sep { color: var(--color-border); }
+</style>

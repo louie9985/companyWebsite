@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { SITE, SITE_URL } from '../lib/site';
+import { webPageJsonLd } from '../lib/jsonld';
+
+const description = `${SITE.name}退费政策：缴费后 7 个自然日内可申请无理由退款；7 日后按学员合同约定办理。承诺合肥市人社局监督渠道作为投诉升级路径。`;
+const pageJsonld = [webPageJsonLd({ url: `${SITE_URL}/refund-policy`, name: '退费政策', description })];
+---
+<BaseLayout title="退费政策" description={description} jsonld={pageJsonld} narrow>
+  <Breadcrumb items={[{ name: '首页', url: '/' }, { name: '退费政策', url: '/refund-policy' }]} />
+
+  <h1>退费政策</h1>
+  <p class="lede">
+    我们认为：清晰、可执行的退费规则是建立信任的起点。下面是我校的退费条款总览，<strong>具体执行以与学员签署的书面合同为准</strong>。
+  </p>
+
+  <section class="rule rule-success">
+    <h2>核心条款 · 缴费 7 日内无理由退款</h2>
+    <p><strong>自缴费之日起 7 个自然日内</strong>，学员可申请无理由退款。我校将在合同约定时限内完成审核与原路退款。</p>
+    <p class="hint">注：以下情形为合理扣减项，将在退款时按合同约定执行：①已寄出实体教材的，扣除教材实际成本；②已使用平台服务的，扣除对应服务对价。具体金额上限以合同条款为准。</p>
+  </section>
+
+  <section class="rule">
+    <h2>7 日之后的退费办理</h2>
+    <p>7 个自然日之后申请退费的，请按学员合同约定办理。我们承诺所有退费规则在签约前明确告知学员、写入合同；不会在签约后单方面修改条款。如对履约存在异议，可走我校三条独立投诉通道，必要时升级至合肥市人社局监督渠道。</p>
+  </section>
+
+  <section class="rule">
+    <h2>因校方原因停办课程的退费</h2>
+    <p>如因我校原因导致课程无法开班、师资变更影响学员核心权益，或我校单方违反合同约定的，<strong>学员有权申请按已缴费用比例全额或部分退还</strong>。具体计算方式以合同约定为准。</p>
+  </section>
+
+  <section class="rule">
+    <h2>退费办理流程</h2>
+    <ol class="flow">
+      <li><strong>提出申请</strong>：联系班主任，填写《退费申请表》，提交身份核验与缴费凭证。</li>
+      <li><strong>审核确认</strong>：财务与教务联合审核，核对学习记录、教材寄送状态与合同条款。</li>
+      <li><strong>退款处理</strong>：审核通过后，按合同约定时限完成原路退款。</li>
+      <li><strong>结果反馈</strong>：班主任与学员同步退款进度，提供书面凭证。</li>
+    </ol>
+  </section>
+
+  <section class="rule rule-warn">
+    <h2>投诉与升级</h2>
+    <p>若您对退费处理结果有异议，可通过以下三条独立通道反馈：</p>
+    <ul>
+      <li>投诉电话：<a href={`tel:${SITE.contact.tel}`}>{SITE.contact.tel}</a></li>
+      <li>投诉邮箱：<a href={`mailto:${SITE.contact.email}`}>{SITE.contact.email}</a></li>
+      <li>投诉微信：{SITE.contact.wechat}</li>
+    </ul>
+    <p>如对内部处理结果不满意，您有权<strong>向{SITE.licenseAuthority}监督渠道升级投诉</strong>。我们认为透明的投诉机制是长期信任的基础。</p>
+  </section>
+
+  <section class="rule">
+    <h2>合规声明</h2>
+    <p>本退费政策遵守国家与安徽省关于民办职业培训机构的相关规定。条款最终以与学员签署的合同条款为准；本页面属对外公开承诺，与合同条款不一致时，<strong>以对学员更有利的条款为准</strong>。</p>
+    <p class="hint">最近更新：本页面将随合同模板更新同步修订，重大修订会在首页公示并保留历史版本。</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .lede { font-size: 1.05rem; color: var(--color-text-soft); margin-bottom: var(--space-6); }
+  .rule { background: #fff; border: 1px solid var(--color-border); border-left: 4px solid var(--color-primary); border-radius: var(--radius); padding: var(--space-5) var(--space-6); margin-bottom: var(--space-4); }
+  .rule h2 { margin-top: 0; font-size: 1.1rem; }
+  .rule p { font-size: 0.95rem; }
+  .rule.rule-success { border-left-color: var(--color-success); background: #f0faf6; }
+  .rule.rule-warn { border-left-color: var(--color-warning); background: #fff7ed; }
+  .hint { font-size: 0.85rem; color: var(--color-text-muted); }
+  .flow { padding-left: 1.5rem; }
+  .flow li { margin-bottom: var(--space-3); }
+</style>

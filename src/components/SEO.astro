@@ -1,0 +1,54 @@
+---
+import { SITE, SITE_URL } from '../lib/site';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  jsonld?: object | object[];
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  jsonld,
+  ogImage = SITE.ogImage,
+  ogType = 'website',
+  noindex = false,
+} = Astro.props;
+
+const fullTitle = title === SITE.name ? title : `${title} | ${SITE.name}`;
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, SITE_URL).href;
+const ogImageUrl = ogImage.startsWith('http') ? ogImage : `${SITE_URL}${ogImage}`;
+const robotsContent = noindex
+  ? 'noindex,nofollow'
+  : 'index,follow,max-image-preview:large,max-snippet:-1';
+const jsonldArray = jsonld ? (Array.isArray(jsonld) ? jsonld : [jsonld]) : [];
+---
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<meta name="keywords" content="合肥中世健,中世健教育,健康管理师培训,公共营养师培训,心理咨询师培训,合肥健康培训,安徽职业培训" />
+<meta name="author" content={SITE.legalName} />
+<meta name="robots" content={robotsContent} />
+<link rel="canonical" href={canonicalUrl} />
+
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:type" content={ogType} />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:site_name" content={SITE.name} />
+<meta property="og:locale" content="zh_CN" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageUrl} />
+
+{jsonldArray.map((schema) => (
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} is:inline />
+))}

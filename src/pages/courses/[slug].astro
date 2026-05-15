@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { SITE, SITE_URL } from '../../lib/site';
+import { courseJsonLd, webPageJsonLd } from '../../lib/jsonld';
+import { courses } from '../../data/courses';
+
+export function getStaticPaths() {
+  return courses.map((c) => ({ params: { slug: c.slug }, props: { course: c } }));
+}
+
+const { course } = Astro.props;
+const description = `${course.name} | ${SITE.name}：${course.description.slice(0, 80)}…`;
+
+const pageJsonld = [
+  webPageJsonLd({ url: `${SITE_URL}/courses/${course.slug}`, name: course.name, description }),
+  courseJsonLd({
+    slug: course.slug,
+    name: course.name,
+    description: course.description,
+    category: course.category,
+    mode: course.mode,
+    priceMin: course.priceMin,
+    priceMax: course.priceMax,
+  }),
+];
+---
+<BaseLayout title={course.name} description={description} jsonld={pageJsonld} narrow>
+  <Breadcrumb items={[
+    { name: '首页', url: '/' },
+    { name: '课程项目', url: '/courses' },
+    { name: course.name, url: `/courses/${course.slug}` },
+  ]} />
+
+  <p class="cat">{course.category}</p>
+  <h1>{course.name}</h1>
+  <p class="desc">{course.description}</p>
+
+  <section>
+    <h2>课程亮点</h2>
+    <ul class="hl-list">
+      {course.highlights.map((h) => <li>{h}</li>)}
+    </ul>
+  </section>
+
+  <section>
+    <h2>课程信息</h2>
+    <dl class="meta">
+      <dt>适合学员</dt><dd>{course.audience}</dd>
+      {course.duration && (<><dt>课时安排</dt><dd>{course.duration}</dd></>)}
+      <dt>学习方式</dt><dd>{course.modeText}</dd>
+      <dt>学费</dt><dd>{course.priceText}</dd>
+      {course.certIssuer && (<><dt>证书 / 考核来源</dt><dd>{course.certIssuer}</dd></>)}
+    </dl>
+  </section>
+
+  <section class="note">
+    <h2>关于考试结果的说明</h2>
+    <p>本课程的相关考试由<strong>发证机关</strong>统一组织、统一阅卷、统一颁证，结果以官方判定为准。我校提供系统课程、模考题库、答疑督学等学习服务，但<strong>不对考试结果作任何明示或暗示的保证</strong>。任何"包过""一次过""保证拿证"的话术均不属实，亦违反《广告法》第二十四条。</p>
+    <p>报名前我们会与您签署书面合同，明示退费规则、服务范围、考期安排与投诉通道。如对履约存在异议，可走我校三条独立投诉通道，必要时升级至合肥市人社局监督渠道。</p>
+  </section>
+
+  <section class="cta">
+    <a class="btn btn-primary" href="/contact">咨询课程顾问</a>
+    <a class="btn btn-ghost" href="/refund-policy">查看退费政策</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .cat { color: var(--color-primary); font-weight: 600; font-size: 0.9rem; margin: 0 0 var(--space-2); }
+  .desc { font-size: 1.05rem; color: var(--color-text-soft); margin: 0 0 var(--space-5); }
+  .hl-list { list-style: none; padding: 0; display: grid; gap: var(--space-2); }
+  .hl-list li { background: var(--color-primary-light); padding: var(--space-3) var(--space-4); border-radius: var(--radius); color: var(--color-primary-dark); font-weight: 500; }
+  .hl-list li::before { content: '✓ '; font-weight: 700; }
+  .meta { display: grid; grid-template-columns: 140px 1fr; gap: var(--space-3) var(--space-4); }
+  .meta dt { font-weight: 600; color: var(--color-text); margin: 0; }
+  .meta dd { margin: 0; color: var(--color-text-soft); }
+  .note { background: var(--color-bg-soft); padding: var(--space-5) var(--space-6); border-radius: var(--radius-lg); border-left: 4px solid var(--color-warning); }
+  .note h2 { margin-top: 0; font-size: 1.05rem; }
+  .note p { font-size: 0.92rem; }
+  .cta { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-6); }
+  .btn { display: inline-block; padding: 12px 24px; border-radius: var(--radius); font-weight: 600; text-decoration: none; font-size: 0.95rem; }
+  .btn-primary { background: var(--color-primary); color: #fff; }
+  .btn-primary:hover { background: var(--color-primary-dark); color: #fff; text-decoration: none; }
+  .btn-ghost { background: transparent; color: var(--color-primary); border: 1px solid var(--color-primary); }
+  .btn-ghost:hover { background: var(--color-primary-light); text-decoration: none; }
+</style>
