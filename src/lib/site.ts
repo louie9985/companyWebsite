@@ -29,7 +29,7 @@ export const SITE = {
   contact: {
     tel: '15705694597',
     email: 'qiao@zsjedc.com',
-    wechat: '__WECHAT_ID__',
+    wechat: 'hello-hello-666',
     wechatQrCode: '/contact-wechat.jpg',
     publicQrCode: '/qrcode-wechat.jpg',
     hours: '周一至周五 09:00-18:00',
