@@ -1,4 +1,4 @@
-# 合肥中世健教育 robots.txt
+# 中世健教育 robots.txt
 User-agent: *
 Allow: /
 Disallow: /404
@@ -54,4 +54,4 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://www.example.com/sitemap-index.xml
+Sitemap: https://www.zhongshijian.top/sitemap-index.xml
