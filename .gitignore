@@ -29,5 +29,8 @@ data/
 # claude
 .claude/
 
+# SSL certificates
+zsjedc.com_nginx/
+
 # misc
 *.log

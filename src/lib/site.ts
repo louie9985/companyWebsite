@@ -5,7 +5,7 @@
  * __DOMAIN__ / __ICP__ / __POLICE_ICP__ / __TEL__ / __EMAIL__ / __WECHAT_ID__
  */
 
-export const SITE_URL = 'https://www.zhongshijian.top';
+export const SITE_URL = 'https://www.zsjedc.com';
 
 export const SITE = {
   name: '中世健教育',

@@ -40,7 +40,7 @@ public/            # 静态资源（图片、robots.txt、llms.txt）
 | IP | 129.211.215.38 |
 | 用户 | ubuntu |
 | Web 服务 | Nginx 1.24 |
-| 域名 | zhongshijian.top |
+| 域名 | zsjedc.com |
 | HTTPS | Let's Encrypt（certbot 自动续期） |
 | 网站目录 | /var/www/zhongshijian |
 | Nginx 配置 | /etc/nginx/conf.d/zhongshijian.conf |
@@ -61,7 +61,7 @@ scp -r dist/* ubuntu@129.211.215.38:/var/www/zhongshijian/
 ```bash
 # 安装 certbot 并配置 HTTPS
 ssh ubuntu@129.211.215.38 "sudo apt install -y certbot python3-certbot-nginx"
-ssh ubuntu@129.211.215.38 "sudo certbot --nginx -d zhongshijian.top -d www.zhongshijian.top"
+ssh ubuntu@129.211.215.38 "sudo certbot --nginx -d zsjedc.com -d www.zsjedc.com"
 ```
 
 ## 代码仓库

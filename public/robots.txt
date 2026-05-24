@@ -54,4 +54,4 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://www.zhongshijian.top/sitemap-index.xml
+Sitemap: https://www.zsjedc.com/sitemap-index.xml
